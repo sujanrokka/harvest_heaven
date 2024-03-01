@@ -1,15 +1,17 @@
 @auth
     <!DOCTYPE html>
     <html lang="en">
+
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>View Orders</title>
-        @vite("resources/css/app.css")
+        @vite('resources/css/app.css')
     </head>
+
     <body>
-        @include("components.header")
+        @include('components.header')
 
 
         <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
@@ -27,7 +29,7 @@
                             </th>
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Updated At
+                                Order By
                             </th>
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -47,50 +49,52 @@
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Price
                             </th>
-
-
-                            <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-
-                            </th>
-                            <!-- Add more header columns as needed -->
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
 
 
-                         @for ($i = 0; $i < count($products); $i++)
-
-                            <tr>
+                        @foreach ($products as $index => $product)
+                            <tr class="{{ $index % 2 == 0 ? 'bg-gray-400 text-white' : '' }}">
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    {{$products[$i]["id"]}}
+                                    Order no {{ ++$index }}
                                 </td>
 
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    {{$products[$i]["created_at"]}}
+                                    {{ $product['created_at'] }}
                                 </td>
 
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    {{$products[$i]["updated_at"]}}
+                                    {{ $product->user->name }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    {{$products[$i]["name"]}}
+                                    {{ $product->product->name }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    {{$products[$i]["image"]}}
+                                    <img width="100%" src="{{ url('/') }}/storage/{{ $product->product->image }}">
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    {{$products[$i]["description"]}}
+                                    {{ $product->product->description }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    {{$products[$i]["price"]}}
+                                    {{ $product->product->price }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    {{$products[$i]["action"]}}
-                                </td>
+
+                                @if ($product->has_deliver == 0)
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <a href="/deliverOrders/{{ $product->id }}"
+                                            class="px-3 py-1 bg-blue-500 rounded-md ">Delivered</a>
+                                    </td>
+                                @else
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <a href="/orderBill/{{ $product->id }}"
+                                            class="px-3 py-1 bg-blue-500 rounded-md ">View Bill</a>
+                                    </td>
+                                @endif
+
+
                             </tr>
-
-                        @endfor
+                        @endforeach
                     </tbody>
                 </table>
 
@@ -98,5 +102,6 @@
             </div>
         </div>
     </body>
+
     </html>
 @endauth

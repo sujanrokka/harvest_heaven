@@ -66,43 +66,56 @@ class FarmerController extends Controller
         // buyer lai login garaune
         $b = $req->validate([
             'name' => 'required',
-            'image'=>'required|image|mimes:png,jpg,jpeg,gif,svg|max:2048',
+            'image' => 'required|image|mimes:png,jpg,jpeg,gif,svg|max:2048',
             'description' => 'required',
             'price' => 'required',
         ]);
 
         //handle upload image
-        if($req->hasFile('image'))
-        {
-            $image=$req->file('image');
-            $imageName=uniqid().'.'.$image->getClientOriginalExtension();
-            $imagePath=$image->storeAs('public',$imageName);
+        if ($req->hasFile('image')) {
+            $image = $req->file('image');
+            $imageName = uniqid() . '.' . $image->getClientOriginalExtension();
+            $imagePath = $image->storeAs('public', $imageName);
 
             $b['image'] = $imagePath;
-
-
         }
 
         $user_id = auth()->id();
-        $product=new Product;
-        $product->user_id=$user_id;
-        $product->image=$imageName;
-        $product->name=$req->name;
-        $product->price=$req->price;
-        $product->description=$req->description;
+        $product = new Product;
+        $product->user_id = $user_id;
+        $product->image = $imageName;
+        $product->name = $req->name;
+        $product->price = $req->price;
+        $product->description = $req->description;
         $product->save();
         return redirect('/viewMyProduct');
     }
 
-    public function deleteProduct($id) {
+    public function deleteProduct($id)
+    {
         Product::destroy($id);
 
         return redirect("/viewMyProduct");
     }
 
-    public function viewOrders() {
-       $products=Cart::with(['user','product'])->get();
-    
-        return view("viewOrders",compact('products'));
+    public function viewOrders()
+    {
+        $products = Cart::with(['user', 'product'])->get();
+
+        return view("viewOrders", compact('products'));
+    }
+
+    public function has_deliver($id)
+    {
+        $order = Cart::where('id', $id)->first();
+        $order->has_deliver = 1;
+        $order->save();
+        return redirect('/viewOrders');
+    }
+
+    public function bill_detail($id)
+    {
+        $b = Cart::where('has_deliver', 1)->with(['user', 'product'])->first();
+        return view("billView", compact('b'));
     }
 }

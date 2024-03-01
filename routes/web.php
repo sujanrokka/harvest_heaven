@@ -41,10 +41,10 @@ Route::post('/logout', [ProcessController::class, "logout"]);
 Route::get("/dashboard", function () {
     if (Auth::check()) {
         $b = Auth::user()->type;
-        if($b == 0)  {
+        if ($b == 0) {
             return view("farmerportal");
         } else {
-        $b = Product::orderBy('updated_at', 'desc')->get();
+            $b = Product::orderBy('updated_at', 'desc')->get();
 
             return view("buyerportal", [
                 "products" => $b
@@ -65,6 +65,8 @@ Route::get("/viewMyProduct", [FarmerController::class, "viewMyProduct"]);
 Route::get("/processBuy/{id}", [BuyerController::class, "processBuy"]);
 
 Route::get("/viewOrders", [FarmerController::class, "viewOrders"]);
+Route::get("/deliverOrders/{id}", [FarmerController::class, "has_deliver"]);
+Route::get("/orderBill/{id}", [FarmerController::class, "bill_detail"]);
 Route::get("/profile", [BuyerController::class, "profile"]);
 Route::get("/search", [BuyerController::class, "search"]);
 
@@ -72,4 +74,3 @@ Route::get("/search", [BuyerController::class, "search"]);
 // routes/web.php
 
 Route::post("/processBuy/{id}", [BuyerController::class, "processBuy"])->name('processBuy');
-

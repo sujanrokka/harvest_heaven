@@ -23,7 +23,7 @@
                         <div class="text-red-600 text-xl font-bold">{{ $product['name'] }}</div>
                         <div class="text-white">{{ $product['description'] }}</div>
                         <div class="text-white">Price: Rs{{ $product['price'] }}</div>
-                      
+
                     </div>
                     <!-- Product.blade.php or a similar view -->
                     <button class="bg-green-500 m-4 p-2 rounded-lg" id="addToCart" data-id='{{ $product['id'] }}'>
