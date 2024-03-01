@@ -17,6 +17,7 @@ class Product extends Model
         'user_id'
     ];
 
+    protected $table="products";//i have changed here 
     public function user()
     {
         return $this->belongsTo(User::class);

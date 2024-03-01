@@ -4,28 +4,54 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Shop;
+use App\Models\Cart;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class BuyerController extends Controller
 {
+    // public function processBuy($id)
+    // {
+    //     $b = [];
+    //     $b['product_id'] = $id;
+    //     $b['user_id'] = auth()->id();
+
+    //     Shop::create($b);
+    //     return redirect('/dashboard');
+    // }
+
     public function processBuy($id)
-    {
-        $b = [];
-        $b['product_id'] = $id;
-        $b['user_id'] = auth()->id();
+{
+    $product = Product::find($id);
 
-        Shop::create($b);
-        return redirect('/dashboard');
+    if (!$product) {
+        // Handle product not found
+        return redirect('/dashboard')->with('error', 'Product not found');
     }
 
-    public function profile()
-    {
-        $userId = auth()->id();
-        $shops = Shop::where('user_id', $userId)->get();
-        $shopIds = $shops->pluck('product_id')->toArray();
-        $products = Product::whereIn('id', $shopIds)->get();
-        return view("profile", ["id" => auth()->id(), "products" => $products]);
-    }
+    auth()->user()->cart()->attach($product);
+
+    return redirect('/dashboard')->with('success', 'Product added to cart successfully');
+}
+
+
+ public function profile()
+{
+    $userId = auth()->id();
+    $shops = Shop::where('user_id', $userId)->get();
+    $shopIds = $shops->pluck('product_id')->toArray();
+    $products = Product::whereIn('id', $shopIds)->get();
+
+    $user = auth()->user();
+    $cartItems = $user->cart;
+
+    return view('profile', ['user' => $user, 'cartItems' => $cartItems, 'products' => $products]);
+}
+
+
+
+  
+
 
     public function search(Request $req) {
         $query = $req->input('q');

@@ -16,7 +16,7 @@ class ProcessController extends Controller
             'bank' => 'required',
             'account' => 'required|regex:/^[0-9]+$/|max:20|min:9',
             'password' => 'required',
-           'confirm-password' => 'required|same:password',
+            'confirm-password' => 'required|same:password',
             'email' => 'required|email|max:255|unique:users',
         ]);
         $b["type"] = 0;

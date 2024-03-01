@@ -5,6 +5,7 @@ use App\Http\Controllers\FarmerController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProcessController;
+use App\Http\Controllers\ImageController;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 
@@ -66,4 +67,9 @@ Route::get("/processBuy/{id}", [BuyerController::class, "processBuy"]);
 Route::get("/viewOrders", [FarmerController::class, "viewOrders"]);
 Route::get("/profile", [BuyerController::class, "profile"]);
 Route::get("/search", [BuyerController::class, "search"]);
+
+
+// routes/web.php
+
+Route::post("/processBuy/{id}", [BuyerController::class, "processBuy"])->name('processBuy');
 

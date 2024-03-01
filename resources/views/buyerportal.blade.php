@@ -18,15 +18,20 @@
        <div class="flex flex-wrap justify-around">
         @for ($i = 0; $i < count($products); $i++)
         <div class="m-4 p-4 bg-[#0d0e0dc8] flex flex-col w-[20%]">
-            <img width="100%"  src="{{ $products[$i]['image'] }}">
+            <img width="100%" src="asset($products[$i]['image'])}}">
             <div class="flex flex-col">
                 <div class="text-red-600 text-xl font-bold"> {{ $products[$i]['name'] }}</div>
                 <div class="text-white"> {{ $products[$i]['description'] }}</div>
                 <div class="text-white">Price: Rs{{ $products[$i]['price'] }}</div>
+                <img width="100%" src="{{asset($products[$i]['image'])}}"> 
                 <button class="bg-green-500 m-4 p-2 rounded-lg" onclick="purchaseProduct('{{ $products[$i]['id'] }}')">
                     <a href="processBuy/{{$products[$i]['id']}}">Buy</button></a>
             </div>
-        </div>
+           <!-- Product.blade.php or a similar view -->
+           <button class="bg-green-500 m-4 p-2 rounded-lg" onclick="addToCart('{{ $products[$i]['id'] }}')>
+            <a href="processBuy/{{$products[$i]['id']}}">Add to Cart</button></a>
+    </div>
+
          @endfor
 
        </div>
@@ -44,4 +49,10 @@
         // Simulate a successful purchase
         alert('Success! You have purchased ' + ' with ID ' + productId);
     }
+    function addToCart(productId) {
+        // Simulate a successful purchase
+        alert('Success! Product with ID ' + productId + ' added to cart.');
+    }
+
+    
 </script>

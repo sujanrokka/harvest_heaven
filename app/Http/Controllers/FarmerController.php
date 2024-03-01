@@ -65,16 +65,34 @@ class FarmerController extends Controller
         // buyer lai login garaune
         $b = $req->validate([
             'name' => 'required',
-            // 'image' => 'required',
+            'image'=>'required|image|mimes:png,jpg,jpeg,gif,svg|max:2048',
             'description' => 'required',
             'price' => 'required',
         ]);
 
-        $b['image'] = 'NA';
+        //handle upload image
+        if($req->hasFile('image'))
+        {
+            $image=$req->file('image');
+            $imageName=uniqid().'.'.$image->getClientOriginalExtension();
+            $imagePath=$image->storeAs('public',$imageName);
+            
+            $b['image'] = '$imagePath';
+
+
+        }
+
+        $user_id = auth()->id();
+        $product=new Product;
+        $product->user_id=$user_id;
+        $product->image=$imageName;
+        $product->name=$req->name;
+        $product->price=$req->price;
+        $product->description=$req->description;
+        $product->save();
+    
         $b['user_id'] = auth()->id();
-
         $x = Product::create($b);
-
         return redirect('/viewMyProduct');
     }
 
