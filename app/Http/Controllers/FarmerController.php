@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\Product;
 use App\Models\Shop;
 use Illuminate\Http\Request;
@@ -100,15 +101,8 @@ class FarmerController extends Controller
     }
 
     public function viewOrders() {
-        $products = Product::orderBy('updated_at', 'desc')->get();
-        $shopIds = $products->pluck('shop_id')->unique();
-        $shops = Shop::whereIn('id', $shopIds)->get();
-        $productsWithShop = $products->map(function ($product) use ($shops) {
-            $shop = $shops->where('id', $product->shop_id)->first();
-            $product->shop = $shop;
-            return $product;
-        });
-
-        return view("viewOrders", ["products" => $productsWithShop]);
+       $products=Cart::with(['user','product'])->get();
+    
+        return view("viewOrders",compact('products'));
     }
 }

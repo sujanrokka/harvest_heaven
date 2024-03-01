@@ -22,14 +22,10 @@ class BuyerController extends Controller
 
     public function processBuy($id)
 {
-    $product = Product::find($id);
-
-    if (!$product) {
-        // Handle product not found
-        return redirect('/dashboard')->with('error', 'Product not found');
-    }
-
-    auth()->user()->cart()->attach($product);
+   $cart=new Cart;
+   $cart->product_id=$id;
+   $cart->user_id=auth()->id();
+   $cart->save();
 
     return redirect('/dashboard')->with('success', 'Product added to cart successfully');
 }
