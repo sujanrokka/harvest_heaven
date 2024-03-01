@@ -76,8 +76,8 @@ class FarmerController extends Controller
             $image=$req->file('image');
             $imageName=uniqid().'.'.$image->getClientOriginalExtension();
             $imagePath=$image->storeAs('public',$imageName);
-            
-            $b['image'] = '$imagePath';
+
+            $b['image'] = $imagePath;
 
 
         }
@@ -90,9 +90,6 @@ class FarmerController extends Controller
         $product->price=$req->price;
         $product->description=$req->description;
         $product->save();
-    
-        $b['user_id'] = auth()->id();
-        $x = Product::create($b);
         return redirect('/viewMyProduct');
     }
 
