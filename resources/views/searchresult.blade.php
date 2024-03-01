@@ -16,17 +16,20 @@
 
 
         <div class="flex flex-wrap justify-around">
-            @for ($i = 0; $i < count($products); $i++)
+            @foreach ($products as $product)
                 <div class="m-4 p-4 bg-[#0d0e0dc8] flex flex-col w-[20%]">
                     <img width="100%" src="{{ url('/') }}/storage/{{ $product['image'] }}">
                     <div class="flex flex-col">
-                        <div class="text-red-600 text-xl font-bold"> {{ $products[$i]['name'] }}</div>
-                        <div class="text-white"> {{ $products[$i]['description'] }}</div>
-                        <button class="bg-green-500 m-4 p-2 rounded-lg">
-                            <a href="processBuy/{{ $products[$i]['id'] }}">Buy</button>
+                        <div class="text-red-600 text-xl font-bold">{{ $product['name'] }}</div>
+                        <div class="text-white">{{ $product['description'] }}</div>
+                        <div class="text-white">Price: Rs{{ $product['price'] }}</div>
+
                     </div>
+                    <!-- Product.blade.php or a similar view -->
+                    <button class="bg-green-500 m-4 p-2 rounded-lg" id="addToCart" data-id='{{ $product['id'] }}'>
+                        <span>Buy Now</span></button>
                 </div>
-            @endfor
+            @endforeach
 
         </div>
 
