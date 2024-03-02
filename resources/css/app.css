@@ -1,27 +1,3 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-.body {
-    background: url(https://wildsoundwritingfestivalreview.files.wordpress.com/2014/11/0af2883d979f6e27cd1fd86ad42bf1ee_large.gif);
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-/* 
-flex justify-center items-center
-.xyz {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-} */
-.formbg
-{
-    background: url(https://wildsoundwritingfestivalreview.files.wordpress.com/2014/11/0af2883d979f6e27cd1fd86ad42bf1ee_large.gif);
-    background-repeat: no-repeat;
-    background-size:cover;
-    /* opacity:0.5; */
-}
-img {
-    height: 200px;
-    object-fit: cover;
-}

@@ -1,14 +1,9 @@
 <?php
 
-use App\Http\Controllers\BuyerController;
-use App\Http\Controllers\FarmerController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Buyer;
+use App\Http\Controllers\Farmer;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\ProcessController;
-use App\Http\Controllers\ImageController;
-use App\Models\Product;
-use Illuminate\Support\Facades\Auth;
-
 
 /*
 |--------------------------------------------------------------------------
@@ -16,61 +11,54 @@ use Illuminate\Support\Facades\Auth;
 |--------------------------------------------------------------------------
 |
 | Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
 |
 */
 
 Route::get('/', function () {
-    return view('index');
+    return view('welcome');
 });
 
-Route::get('/farmer', [LoginController::class, "farmerLogin"]);
-Route::get('/farmerRegistration', [LoginController::class, "farmerRegistration"]);
-Route::get('/buyer', [LoginController::class, "buyerlogin"]);
-Route::get('/buyerRegistration', [LoginController::class, "buyerRegistration"]);
 
-// Processes Login, Logout and Register
-Route::post('/farmerRegistration', [ProcessController::class, "farmerRegistration"]);
-Route::post('/buyerRegistration', [ProcessController::class, "buyerRegistration"]);
-Route::post('/buyerLogin', [ProcessController::class, "buyerLogin"]);
-Route::post('/farmerLogin', [ProcessController::class, "farmerLogin"]);
-Route::post('/logout', [ProcessController::class, "logout"]);
+Route::middleware(['auth', 'is_buyer'])->group(function () {
 
-// Dashboard
-Route::get("/dashboard", function () {
-    if (Auth::check()) {
-        $b = Auth::user()->type;
-        if ($b == 0) {
-            return view("farmerportal");
-        } else {
-            $b = Product::orderBy('updated_at', 'desc')->get();
+    Route::get('/dashboard/buyer', [Buyer\BuyerDashController::class,'index'])->name('dashbord.buyer');
+    Route::get('/buyer/add/cart', [Buyer\BuyerDashController::class, 'viewCart'])->name('buyer.view.cart');
+    Route::post('/buyer/add/cart/{id}', [Buyer\BuyerDashController::class, 'addToCart'])->name('buyer.add.cart');
+    Route::delete('/buyer/delete/cart/{id}', [Buyer\BuyerDashController::class, 'deleteCartItem'])->name('buyer.delete.cart');
+    Route::get('/buyer/order/placed/', [Buyer\BuyerDashController::class, 'placeOrder'])->name('buyer.place.order');
 
-            return view("buyerportal", [
-                "products" => $b
-            ]);
-        }
-    } else {
-        return redirect("/");
-    }
+
+
+    Route::get('/buyer/view/order', [Buyer\BuyerDashController::class, 'viewOrder'])->name('buyer.view.order');
+
+
 });
 
-// Farmer Side
-Route::get("/addNewProduct", [FarmerController::class, "addNewProduct"]);
-Route::post("/addNewProduct", [FarmerController::class, "addNewProductPost"]);
-Route::get("/editProduct/{id}", [FarmerController::class, "editProduct"]);
-Route::post("/editProduct/{id}", [FarmerController::class, "editProductPost"]);
-Route::get("/deleteProduct/{id}", [FarmerController::class, "deleteProduct"]);
-Route::get("/viewMyProduct", [FarmerController::class, "viewMyProduct"]);
-Route::get("/processBuy/{id}", [BuyerController::class, "processBuy"]);
+Route::middleware('auth', 'is_farmer')->group(function () {
 
-Route::get("/viewOrders", [FarmerController::class, "viewOrders"]);
-Route::get("/deliverOrders/{id}", [FarmerController::class, "has_deliver"]);
-Route::get("/orderBill/{id}", [FarmerController::class, "bill_detail"]);
-Route::get("/profile", [BuyerController::class, "profile"]);
-Route::get("/search", [BuyerController::class, "search"]);
+    Route::get('/dashboard/farmer', [Farmer\FarmerDashController::class, 'index'])->name('dashbord.farmer');
+
+    Route::get('/farmer/product', [Farmer\ProductController::class, 'index'])->name('farmer.product');
+    Route::get('/farmer/product/add', [Farmer\ProductController::class, 'index_add'])->name('farmer.product.add');
+    Route::post('/farmer/product', [Farmer\ProductController::class,'store'])->name('farmer.product.store');
+
+    Route::get('/farmer/product/{product}/edit', [Farmer\ProductController::class, 'edit'])->name('farmer.product.edit');
+    Route::put('/farmer/product/{product}', [Farmer\ProductController::class, 'update'])->name('farmer.product.update');
+    Route::delete('/farmer/product/{product}', [Farmer\ProductController::class, 'destroy'])->name('farmer.product.destroy');
 
 
-// routes/web.php
+    Route::get('/farmer/view/order', [Farmer\ProductController::class, 'viewOrder'])->name('farmer.view.order');
+    Route::post('/farmer/view/order/deliver/{order}', [Farmer\ProductController::class, 'orderDeliver'])->name('farmer.deliver.order');
 
-Route::post("/processBuy/{id}", [BuyerController::class, "processBuy"])->name('processBuy');
+});
+
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__.'/auth.php';
