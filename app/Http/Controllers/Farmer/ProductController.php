@@ -124,6 +124,6 @@ class ProductController extends Controller
     }
 
     public function billView($order){
-
+        re
     }
 }
