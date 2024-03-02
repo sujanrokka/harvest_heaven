@@ -13,16 +13,16 @@
     <div class="flex flex-col  justify-center items-center w-[100vw] h-[100vh]">
 
         <div
-            class="m-4 text-center items-center flex flex-col w-[95vw] justify-center bg-[#a6cd99aa] rounded-3xl h-[90vh]">
+            class="m-4 text-center items-center flex flex-col w-[95vw] justify-center bg-[#7ef27a9c] rounded-3xl h-[90vh]">
             <marquee direction="right"><img
                     src="https://i.pinimg.com/originals/21/6f/fe/216ffedf6e455be8b797a10c856b7b1f.gif" width="300px"
                     height="300px" alt=""></marquee>
-            <div class="text-2xl font-semibold p-4 text-white">
+            <div class="text-2xl font-semibold p-4 text-yello">
                 Bridging the gap, from seed to sale
-                <div class="text-[50px] m-4 font-bold text-orange-600 italic underline">#HarvestHeaven</div>
+                <div class="text-[50px] m-4 font-bold  text-purple-900 italic underline">#HarvestHeaven</div>
             </div>
             <div class="flex justify-center items-center p-4">
-                <a class="bg-green-700 flex justify-center hover:bg-blue-800  w-[30vw]  rounded-xl ml-2 text-white font-bold p-4"
+                <a class="bg-green-700 flex justify-center hover:bg-yellow-500  w-[30vw]  rounded-xl ml-2 text-white font-bold p-4"
                     href="/farmer">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                         stroke="currentColor" class="w-6 h-6 mr-4 font-bold">
@@ -30,7 +30,7 @@
                             d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                     </svg>
                     Log in (Farmer)</a>
-                <a class="bg-red-700 flex justify-center hover:bg-blue-800  w-[30vw] rounded-xl ml-2 text-white font-bold p-4"
+                <a class="bg-red-700 flex justify-center hover:bg-yellow-500  w-[30vw] rounded-xl ml-2 text-white font-bold p-4"
                     href="/buyer">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                         stroke="currentColor" class="w-6 h-6 mr-4 font-bold">

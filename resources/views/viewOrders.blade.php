@@ -71,7 +71,8 @@
                                     {{ $product->product->name }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <img width="100%" src="{{ url('/') }}/storage/{{ $product->product->image }}">
+                                    <img width="100%" src="{{ url('/') }}/storage/{{ $product->product->image }}" alt="" class="rounded-full">
+                                    {{-- <img src="{{ url('/') }}/storage/{{ $product['image'] }}" alt="" class="rounded-full"> --}}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     {{ $product->product->description }}

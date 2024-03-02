@@ -55,7 +55,7 @@
 
         <button class="m-2 p-2 w-[40vw] rounded-xl bg-green-300" type="submit">Register</button>
         <div class="flex text-white" >If you have an account ,
-            <div class="text-green-500 font-bold" >
+            <div class="text-black font-bold" >
                 <a href="/farmer">Login</a>
             </div>
 

@@ -15,7 +15,7 @@
 
     <div class="flex justify-center">
         <form method="POST" action="addNewProduct" enctype="multipart/form-data"
-            class="p-4 m-4  bg-[#d6c335] flex flex-col px-10 justify-center items-center rounded-xl">
+            class="p-4 m-4  bg-[#a59c50] flex flex-col px-10 justify-center items-center rounded-xl">
             @csrf
             <div class="form-group flex flex-col">
                 <label  class="font-semibold" for="name">Product Name</label>
@@ -26,9 +26,10 @@
             </div>
 
 
-            <div class="form-group flex flex-col">
-                <label class="font-semibold" for="name">Product Image</label>
-                <input name="image" accept="image/*" class="m-2 p-2 w-[40vw] rounded-xl" type="file" placeholder="Product Image">
+                <label class="font-semibold" for="name" >Product Image</label>
+                
+                <div class="form-group  rounded-full flex flex-col">
+                <input name="image" accept="image/*" class="m-2 p-2 w-[40vw] rounded-full" type="file" placeholder="Product Image">
                 @if($errors->has('image'))
                 <span class="text-danger text-red-600">{{$errors->first('image')}}</span>
                 @endif

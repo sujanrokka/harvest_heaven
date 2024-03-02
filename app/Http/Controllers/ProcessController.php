@@ -25,8 +25,6 @@ class ProcessController extends Controller
 
          $x = User::create($b);
 
-        
-
         return redirect(
             "/"
         );
