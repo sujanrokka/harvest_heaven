@@ -122,4 +122,8 @@ class ProductController extends Controller
             ->update(['is_delivered' => 1]);
         return redirect()->route('farmer.view.order')->with('success', 'Product Delivered successfully!');
     }
+
+    public function billView($order){
+
+    }
 }

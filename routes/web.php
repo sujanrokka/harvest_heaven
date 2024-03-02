@@ -51,6 +51,7 @@ Route::middleware('auth', 'is_farmer')->group(function () {
 
     Route::get('/farmer/view/order', [Farmer\ProductController::class, 'viewOrder'])->name('farmer.view.order');
     Route::post('/farmer/view/order/deliver/{order}', [Farmer\ProductController::class, 'orderDeliver'])->name('farmer.deliver.order');
+    Route::get('/farmer/view/bill/{order}', [Farmer\ProductController::class, 'billView'])->name('farmer.view.bill');
 
 });
 

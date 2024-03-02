@@ -63,14 +63,16 @@
                                     <!-- If it's the last item of the order or a new order, display the total price -->
                                     <td class="whitespace-nowrap px-6 py-4">
                                         @if ($order->is_delivered == 0)
-                                            <form action="{{ route('farmer.deliver.order', ['order' => $order->order_no]) }}"
+                                            <form
+                                                action="{{ route('farmer.deliver.order', ['order' => $order->order_no]) }}"
                                                 method="POST">
                                                 @csrf
                                                 <button type="submit"
                                                     class="bg-green-500 text-white px-4 py-2 rounded-md">Deliver</button>
                                             </form>
                                         @else
-                                            Delivered
+                                            <a href="{{ route('farmer.view.bill', ['order' => $order->order_no]) }}">View
+                                                Bill</a>
                                         @endif
                                     </td>
                                 @endif

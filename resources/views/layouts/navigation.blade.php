@@ -33,25 +33,24 @@
                                 {{ __('Dashboard') }}
                             </x-nav-link>
                         @endif
-                    @else
-                        <!-- Settings Dropdown -->
-                        <div class="hidden space-x-4 sm:-my-px sm:ml-10 sm:flex">
-                            <x-nav-link :href="route('profile.edit')">
-                                {{ __('Profile') }}
-                            </x-nav-link>
-                        </div>
-
-                        <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}"
-                            class="hidden space-x-4 sm:-my-px sm:ml-10 sm:flex">
-                            @csrf
-                            <x-nav-link :href="route('logout')"
-                                onclick="event.preventDefault();
-                                this.closest('form').submit();">
-                                {{ __('Log Out') }}
-                            </x-nav-link>
-                        </form>
                     @endauth
+                     <!-- Settings Dropdown -->
+                    <div class="hidden space-x-4 sm:-my-px sm:ml-10 sm:flex">
+                        <x-nav-link :href="route('profile.edit')">
+                            {{ __('Profile') }}
+                        </x-nav-link>
+                    </div>
+
+                    <!-- Authentication -->
+                    <form method="POST" action="{{ route('logout') }}"
+                        class="hidden space-x-4 sm:-my-px sm:ml-10 sm:flex">
+                        @csrf
+                        <x-nav-link :href="route('logout')"
+                            onclick="event.preventDefault();
+                                this.closest('form').submit();">
+                            {{ __('Log Out') }}
+                        </x-nav-link>
+                    </form>
 
                 </div>
 
